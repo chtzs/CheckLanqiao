@@ -4,6 +4,7 @@ import sys
 import os
 
 url: str = "https://dasai.lanqiao.cn/api/action/http/get"
+local_data_path = sys.path[0] + "/news.txt"
 
 
 class PostData:
@@ -21,12 +22,12 @@ def update():
         "url": str(PostData())
     }).json()
     data = json.loads(data)
-    with open("./news.txt", "w") as f:
+    with open(local_data_path, "w") as f:
         f.write(data["new_list"][0]["id"])
 
 
 def diff():
-    if not os.path.exists("./news.txt"):
+    if not os.path.exists(local_data_path):
         print("不存在老版本的新闻文件，请用-u或者--update更新")
         return
     data = requests.post(url, data={
@@ -34,7 +35,7 @@ def diff():
     }).json()
     data = json.loads(data)
 
-    with open("./news.txt", "r") as f:
+    with open(local_data_path, "r") as f:
         old_id = int(f.read().strip())
 
     new_id = int(data["new_list"][0]["id"])
