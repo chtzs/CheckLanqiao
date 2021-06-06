@@ -46,6 +46,7 @@ def diff():
         while curr_id > old_id:
             print(f'{i + 1}. title: {data["new_list"][i]["title"]} \n  content: {data["new_list"][i]["content"]}\n')
             i += 1
+            curr_id -= 1
     else:
         print("无新信息")
 
